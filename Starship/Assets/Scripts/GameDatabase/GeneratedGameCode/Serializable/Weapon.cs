@@ -18,9 +18,7 @@ namespace GameDatabase.Serializable
 		public WeaponClass WeaponClass;
 		public float FireRate;
 		public float Spread;
-        public float Rotation;
-        public UnityEngine.Vector2 InitialPosition;
-        public int Magazine;
+		public int Magazine;
 		public ActivationType ActivationType;
 		public string ShotSound;
 		public string ChargeSound;

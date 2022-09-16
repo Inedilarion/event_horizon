@@ -18,10 +18,8 @@ namespace Combat.Component.Systems.Weapons
             _platform = platform;
             _energyConsumption = bulletFactory.Stats.EnergyCost;
             _spread = weaponStats.Spread;
-            _rotation = weaponStats.Rotation;
-            _initialPosition = weaponStats.InitialPosition;
 
-            Info = new WeaponInfo(WeaponType.Manageable, _spread, bulletFactory, platform, 0, _initialPosition);
+            Info = new WeaponInfo(WeaponType.Manageable, _spread, bulletFactory, platform);
         }
 
         public override float ActivationCost { get { return _energyConsumption; } }
@@ -70,14 +68,12 @@ namespace Combat.Component.Systems.Weapons
                 _activeBullet.Detonate();
 
             _platform.Aim(Info.BulletSpeed, Info.Range, Info.IsRelativeVelocity);
-            _activeBullet = _bulletFactory.Create(_platform, _spread, _rotation, 0, _initialPosition);
+            _activeBullet = _bulletFactory.Create(_platform, _spread, 0, 0);
         }
 
         private bool HasActiveBullet { get { return _activeBullet.IsActive(); } }
 
-        private readonly Vector2 _initialPosition;
         private IBullet _activeBullet;
-        private readonly float _rotation;
         private readonly float _spread;
         private readonly float _energyConsumption;
         private readonly IWeaponPlatform _platform;

@@ -17,10 +17,8 @@ namespace Combat.Component.Systems.Weapons
             _energyConsumption = bulletFactory.Stats.EnergyCost;
             _spread = weaponStats.Spread;
             _chargeTotalTime = 1.0f / weaponStats.FireRate;
-            _rotation = weaponStats.Rotation;
-            _initialPosition = weaponStats.InitialPosition;
 
-            Info = new WeaponInfo(WeaponType.RequiredCharging, _spread, bulletFactory, platform, 0, _initialPosition);
+            Info = new WeaponInfo(WeaponType.RequiredCharging, _spread, bulletFactory, platform);
         }
 
         public override bool CanBeActivated { get { return _chargeTime > 0 || (_platform.IsReady && _platform.EnergyPoints.Value >= _energyConsumption*0.5f); } }
@@ -65,7 +63,7 @@ namespace Combat.Component.Systems.Weapons
         {
             _platform.Aim(Info.BulletSpeed, Info.Range, Info.IsRelativeVelocity);
             _platform.OnShot();
-            _activeBullet = _bulletFactory.Create(_platform, _spread, 0, 0, _initialPosition);
+            _activeBullet = _bulletFactory.Create(_platform, _spread, 0, 0);
 
             InvokeTriggers(ConditionType.OnDischarge);
         }
@@ -79,11 +77,9 @@ namespace Combat.Component.Systems.Weapons
 
         private float _chargeTime;
 
-        private readonly Vector2 _initialPosition;
         private IBullet _activeBullet;
         private readonly float _chargeTotalTime;
         private readonly float _spread;
-        private readonly float _rotation;
         private readonly float _energyConsumption;
         private readonly IWeaponPlatform _platform;
         private readonly Factory.IBulletFactory _bulletFactory;
